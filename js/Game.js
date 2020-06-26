@@ -15,17 +15,37 @@ class Game {
 		 * Creates phrases for use in game
 		 * @return {array} An array of phrases that could be used in the game
 		 */
+	}
+	createPhrases() {
+		const randomPhrases = [
+			new Phrase("Caught between my only routine"),
+			new Phrase("A recluse on an old film"),
+			new Phrase("I chew the scenery down to the bone"),
+			new Phrase("Said the king to the river"),
+			new Phrase("You would not believe the things I saw overseas"),
+		];
+		return randomPhrases;
+	}
+	/**
+	 * Selects random phrase from phrases property
+	 * @return {Object} Phrase object chosen to be used
+	 */
 
-		createPhrases();
-		{
-			const randomPhrases = [
-				new Phrase("Caught between my only routine"),
-				new Phrase("A recluse on an old film"),
-				new Phrase("I chew the scenery down to the bone"),
-				new Phrase("Said the king to the river"),
-				new Phrase("You would not believe the things I saw overseas"),
-			];
-			return randomPhrases;
-		}
+	getRandomPhrase() {
+		return this.phrases[Math.floor(Math.random() * this.phrases.length)];
+	}
+
+	/**
+	 * Begins game by selecting a random phrase and displaying it to user
+	 */
+	startGame() {
+		let overLay = (document.querySelector("#overlay").style.display = "none");
+		overLay;
+
+		const getPhraseObject = game.getRandomPhrase();
+		const displayPhrase = new Phrase(getPhraseObject.phrase);
+
+		displayPhrase.addPhraseToDisplay();
+		this.activePhrase = displayPhrase;
 	}
 }

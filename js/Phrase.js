@@ -9,4 +9,25 @@ class Phrase {
 	constructor(phrase) {
 		this.phrase = phrase.toLowerCase();
 	}
+
+	/**
+	 * Display phrase on game board
+	 */
+	addPhraseToDisplay() {
+		let noDisplay = document.querySelector("#phrase ul");
+		noDisplay.innerHTML = "";
+
+		let phraseLetters = this.phrase.split("");
+		phraseLetters.forEach((letter) => {
+			let li = document.createElement("LI");
+			li.innerHTML = letter;
+			noDisplay.appendChild(li);
+
+			if (letter === " ") {
+				li.className = "space";
+			} else {
+				li.className = "hide letter";
+			}
+		});
+	}
 }
