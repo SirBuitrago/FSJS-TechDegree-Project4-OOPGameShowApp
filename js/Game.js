@@ -53,20 +53,55 @@ class Game {
 	* @return {boolean} True if game has been won, false if game wasn't
 	won
 	*/
-	checkForWin() {}
+	checkForWin() {
+		let hiddenLiElements = document.querySelectorAll('li[class~="hide"]');
+		if (hiddenLiElements.length === 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * Increases the value of the missed property
 	 * Removes a life from the scoreboard
 	 * Checks if player has remaining lives and ends game if player is out
 	 */
-	removeLife() {}
+	removeLife() {
+		// Adds a counter of 1, to the missed object.
+		this.missed += 1;
+		// Variable containing image of the live heart image.
+		const heartContainer = document.querySelector(
+			'img[src="images/liveHeart.png"]'
+		);
+		heartContainer.src = "images/lostHeart.png";
+		// If statement to dictate the booleon value of 'gameOver()'.
+		if (this.missed === 5) {
+			this.gameOver(false);
+		}
+	}
 
 	/**
 	 * Displays game over message
 	 * @param {boolean} gameWon - Whether or not the user won the game
 	 */
-	gameOver(gameWon) {}
+	gameOver(gameWon) {
+		let overlay = document.getElementById("overlay");
+		let title = document.querySelector("#overlay .title");
+		let startButton = document.querySelector("#btn__reset");
+
+		if (gameWon) {
+			overlay.className = "win";
+			title.textContent = "You Win!";
+			startButton.textContent = "Play Again!";
+			overlay.style.display = "flex";
+		} else {
+			overlay.className = "lose";
+			title.textContent = "You Lost!";
+			startButton.textContent = "Play Again!";
+			overlay.style.display = "flex";
+		}
+	}
 
 	/**
 	 * This logic controls various aspects of ingame play.
