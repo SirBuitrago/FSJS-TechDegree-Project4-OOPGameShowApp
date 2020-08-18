@@ -92,13 +92,13 @@ class Game {
 
 		if (gameWon) {
 			overlay.className = "win";
-			title.textContent = "You Win!";
-			startButton.textContent = "Play Again!";
+			title.textContent = "You Are Victorious!";
+			startButton.textContent = "Think you can go again?";
 			overlay.style.display = "flex";
 		} else {
 			overlay.className = "lose";
-			title.textContent = "You Lost!";
-			startButton.textContent = "Play Again!";
+			title.textContent = "Seems you didn't make the cut...";
+			startButton.textContent = "Wanna give it another shot?";
 			overlay.style.display = "flex";
 		}
 	}
