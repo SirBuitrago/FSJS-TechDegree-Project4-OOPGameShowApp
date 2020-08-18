@@ -98,7 +98,7 @@ class Game {
 		} else {
 			overlay.className = "lose";
 			title.textContent = "Seems you didn't make the cut...";
-			startButton.textContent = "Wanna give it another shot?";
+			startButton.textContent = "Wanna give it another shot? Click Here";
 			overlay.style.display = "flex";
 		}
 	}
