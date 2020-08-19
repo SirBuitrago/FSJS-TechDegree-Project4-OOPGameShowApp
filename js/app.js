@@ -9,9 +9,9 @@ FSJS project 4 - OOP Game App
 adds an event listener to the "start game" button, required for the player to intiate the game. It hides the intial page and presents the hidden phrase, along with other necessary game elements.
 */
 let btnReset = document.querySelector("#btn__reset");
-let game = null;
+const game = new Game();
 
 btnReset.addEventListener("click", () => {
-	game = new Game();
 	game.startGame();
+	game.handleInteraction();
 });

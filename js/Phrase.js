@@ -47,11 +47,11 @@ class Phrase {
 	 */
 	showMatchedLetter(letter) {
 		// This variable selects all of the appended li elements.
-		let domLetters = document.querySelectorAll("li");
+		let domLetters = document.querySelectorAll(" li");
 
 		// Here I iterate through the Dom elements with the forEach() method and set the appropriate attribute, if the appropriate letter is selected. This only shows the selected li.
 		domLetters.forEach((li) => {
-			if (li.innerhtml === letter) {
+			if (li.innerHTML === letter) {
 				li.setAttribute("class", "show");
 			}
 		});

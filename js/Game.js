@@ -86,26 +86,82 @@ class Game {
 	 * @param {boolean} gameWon - Whether or not the user won the game
 	 */
 	gameOver(gameWon) {
+		let startButton = document.querySelector("#btn__reset");
 		let overlay = document.getElementById("overlay");
 		let title = document.querySelector("#overlay .title");
-		let startButton = document.querySelector("#btn__reset");
 
 		if (gameWon) {
 			overlay.className = "win";
 			title.textContent = "You Are Victorious!";
-			startButton.textContent = "Think you can go again?";
+			startButton.textContent = "Play Again";
 			overlay.style.display = "flex";
 		} else {
 			overlay.className = "lose";
-			title.textContent = "Seems you didn't make the cut...";
-			startButton.textContent = "Wanna give it another shot? Click Here";
+			title.textContent = "What a bummer...you lost";
+			startButton.textContent = "Start Over?";
 			overlay.style.display = "flex";
 		}
+		this.missed = 0;
+		this.activePhrase = null;
+		const phraseUl = document.querySelector("ul");
+		phraseUl.innerHTML = "";
+		const keyboard = document.querySelectorAll(".key");
+		keyboard.forEach((key) => {
+			key.className = "key";
+			key.removeAttribute("disabled");
+		});
+		const heartContainers = document.querySelectorAll(".tries img");
+		heartContainers.forEach((heartHealth) => {
+			heartHealth.src = "images/liveHeart.png";
+		});
 	}
 
 	/**
-	 * This logic controls various aspects of ingame play.
+	 * Handles onscreen keyboard button clicks
+	 * @param (HTMLButtonElement) button - The clicked button element
 	 */
+	handleInteraction(event) {
+		const keyboardLetters = document.querySelector("#qwerty");
 
-	handleInteraction() {}
+		keyboardLetters.addEventListener("click", (e) => {
+			const keyClicks = e.target.className;
+			if (keyClicks === "key") {
+				const pressedKey = e.target;
+				pressedKey.setAttribute("disabled", true);
+
+				if (game.activePhrase.checkLetter(pressedKey.textContent) === false) {
+					pressedKey.className += " wrong";
+					return game.removeLife();
+				} else {
+					pressedKey.className += " chosen";
+					game.activePhrase.showMatchedLetter(pressedKey.textContent);
+					if (game.checkForWin() === true) {
+						return game.gameOver(true);
+					}
+				}
+			} else {
+				const letterBoard = document.querySelectorAll("#qwerty button");
+				const keyPress = event.key;
+				letterBoard.forEach((key) => {
+					if (key.innerHTML === keyPress) {
+						key.setAttribute("disabled", true);
+						if (game.activePhrase.checkLetter(keyPress) === false) {
+							key.className += " wrong";
+							return game.removeLife();
+						} else {
+							key.className += " chosen";
+							game.activePhrase.showMatchedLetter(keyPress);
+							if (game.checkForWin() === true) {
+								return game.gameOver(false);
+							}
+							keyboardLetters.addEventListener(
+								"keydown",
+								this.handleInteraction()
+							);
+						}
+					}
+				});
+			}
+		});
+	}
 }
