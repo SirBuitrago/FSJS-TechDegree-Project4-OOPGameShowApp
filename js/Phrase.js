@@ -16,11 +16,14 @@ class Phrase {
 	addPhraseToDisplay() {
 		let noDisplay = document.querySelector("#phrase ul");
 		noDisplay.innerHTML = "";
-
+		// This let variable grabs the given phrase and splits() the the phrase into an array of letters.
 		let phraseLetters = this.phrase.split("");
+		// Iterates through the letters within the given phrase.
 		phraseLetters.forEach((letter) => {
+			// This let variable creates the li's for the letters in the phrase and stores them.
 			let li = document.createElement("LI");
 			li.innerHTML = letter;
+			// Appends the li to the DOM.
 			noDisplay.appendChild(li);
 
 			if (letter === " ") {

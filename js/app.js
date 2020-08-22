@@ -11,7 +11,16 @@ adds an event listener to the "start game" button, required for the player to in
 let btnReset = document.querySelector("#btn__reset");
 const game = new Game();
 
-btnReset.addEventListener("click", () => {
+btnReset.addEventListener("click", (e) => {
 	game.startGame();
-	game.handleInteraction();
+});
+
+// Event listener that checks for individual keystrokes form the user, the handleInteraction() method gives it it's functionality.(Also for the exceeds expectations grade)
+document.addEventListener("keydown", (e) => {
+	game.handleInteraction(event);
+});
+
+// Event listener that checks for mouse clicks form the user, the handleInteraction() method gives it, it's functionality.
+document.addEventListener("click", (e) => {
+	game.handleInteraction(event);
 });

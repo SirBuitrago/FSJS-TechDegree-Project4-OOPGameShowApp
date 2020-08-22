@@ -17,6 +17,7 @@ class Game {
 		 */
 	}
 	createPhrases() {
+		// I store the randomPhrases in an array and return them at the end of the code block for later use.
 		const randomPhrases = [
 			new Phrase("Caught between my only routine"),
 			new Phrase("A recluse on an old film"),
@@ -86,10 +87,13 @@ class Game {
 	 * @param {boolean} gameWon - Whether or not the user won the game
 	 */
 	gameOver(gameWon) {
+		// Variables containing distinct elements in the DOM, regarding the gameover() screen and gameWon screen.
+
 		let startButton = document.querySelector("#btn__reset");
 		let overlay = document.getElementById("overlay");
 		let title = document.querySelector("#overlay .title");
 
+		// I build in an if statement that dictates the text content and screen that is shown when you win or lose the game.
 		if (gameWon) {
 			overlay.className = "win";
 			title.textContent = "You Are Victorious!";
@@ -101,6 +105,7 @@ class Game {
 			startButton.textContent = "Start Over?";
 			overlay.style.display = "flex";
 		}
+		// This block of code resets the game upon winning or losing.
 		this.missed = 0;
 		this.activePhrase = null;
 		const phraseUl = document.querySelector("ul");
@@ -117,51 +122,45 @@ class Game {
 	}
 
 	/**
-	 * Handles onscreen keyboard button clicks
+	 * Handles onscreen keyboard button clicks and mouse clicks.
 	 * @param (HTMLButtonElement) button - The clicked button element
 	 */
 	handleInteraction(event) {
-		const keyboardLetters = document.querySelector("#qwerty");
+		// Variable containing the event targets className.
+		const keyClicks = event.target.className;
+		// These If Statements dictate what the game does as the user plays, whether it shows the gameWon Screen or gameOver screen, upon failing guesses or succesfully guessing the letters in the randomPhrase(). It also handles the removal of lifes upon failing guesses.
+		if (keyClicks === "key") {
+			const pressedKey = event.target;
+			pressedKey.setAttribute("disabled", true);
 
-		keyboardLetters.addEventListener("click", (e) => {
-			const keyClicks = e.target.className;
-			if (keyClicks === "key") {
-				const pressedKey = e.target;
-				pressedKey.setAttribute("disabled", true);
-
-				if (game.activePhrase.checkLetter(pressedKey.textContent) === false) {
-					pressedKey.className += " wrong";
-					return game.removeLife();
-				} else {
-					pressedKey.className += " chosen";
-					game.activePhrase.showMatchedLetter(pressedKey.textContent);
-					if (game.checkForWin() === true) {
-						return game.gameOver(true);
-					}
-				}
+			if (game.activePhrase.checkLetter(pressedKey.textContent) === false) {
+				pressedKey.className += " wrong";
+				return game.removeLife();
 			} else {
-				const letterBoard = document.querySelectorAll("#qwerty button");
-				const keyPress = event.key;
-				letterBoard.forEach((key) => {
-					if (key.innerHTML === keyPress) {
-						key.setAttribute("disabled", true);
-						if (game.activePhrase.checkLetter(keyPress) === false) {
-							key.className += " wrong";
-							return game.removeLife();
-						} else {
-							key.className += " chosen";
-							game.activePhrase.showMatchedLetter(keyPress);
-							if (game.checkForWin() === true) {
-								return game.gameOver(false);
-							}
-							keyboardLetters.addEventListener(
-								"keydown",
-								this.handleInteraction()
-							);
+				pressedKey.className += " chosen";
+				game.activePhrase.showMatchedLetter(pressedKey.textContent);
+				if (game.checkForWin() === true) {
+					return game.gameOver(true);
+				}
+			}
+		} else {
+			const letterBoard = document.querySelectorAll("#qwerty button");
+			const keyPress = event.key;
+			letterBoard.forEach((key) => {
+				if (key.innerHTML === keyPress) {
+					key.setAttribute("disabled", true);
+					if (game.activePhrase.checkLetter(keyPress) === false) {
+						key.className += " wrong";
+						return game.removeLife();
+					} else {
+						key.className += " chosen";
+						game.activePhrase.showMatchedLetter(keyPress);
+						if (game.checkForWin() === true) {
+							return game.gameOver(false);
 						}
 					}
-				});
-			}
-		});
+				}
+			});
+		}
 	}
 }
