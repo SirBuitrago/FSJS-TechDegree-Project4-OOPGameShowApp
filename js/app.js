@@ -16,11 +16,11 @@ btnReset.addEventListener("click", (e) => {
 });
 
 // Event listener that checks for individual keystrokes form the user, the handleInteraction() method gives it it's functionality.(Also for the exceeds expectations grade)
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", (event) => {
 	game.handleInteraction(event);
 });
 
 // Event listener that checks for mouse clicks form the user, the handleInteraction() method gives it, it's functionality.
-document.addEventListener("click", (e) => {
+document.addEventListener("click", (event) => {
 	game.handleInteraction(event);
 });

@@ -128,7 +128,7 @@ class Game {
 	handleInteraction(event) {
 		// Variable containing the event targets className.
 		const keyClicks = event.target.className;
-		// These If Statements dictate what the game does as the user plays, whether it shows the gameWon Screen or gameOver screen, upon failing guesses or succesfully guessing the letters in the randomPhrase(). It also handles the removal of lifes upon failing guesses.
+		// These If Statements dictate what the game does as the user plays, whether it shows the gameWon Screen or gameOver screen, upon failing guesses or succesfully guessing the letters in the randomPhrase(). It also handles the removal of lifes upon failing guesses. Both work for either keystroke or mouseclick event listeners.
 		if (keyClicks === "key") {
 			const pressedKey = event.target;
 			pressedKey.setAttribute("disabled", true);
@@ -156,7 +156,7 @@ class Game {
 						key.className += " chosen";
 						game.activePhrase.showMatchedLetter(keyPress);
 						if (game.checkForWin() === true) {
-							return game.gameOver(false);
+							return game.gameOver(true);
 						}
 					}
 				}
