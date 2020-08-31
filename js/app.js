@@ -8,9 +8,9 @@ FSJS project 4 - OOP Game App
 /*
 adds an event listener to the "start game" button, required for the player to intiate the game. It hides the intial page and presents the hidden phrase, along with other necessary game elements.
 */
-
-// All on screen keyboard and buttons, as well as scoreboard stored within variables.
 let game;
+// All on screen keyboard and buttons, as well as scoreboard stored within variables.
+
 const scores = document.querySelector("#scoreboard ol");
 const overlay = document.querySelector("#overlay");
 const btnReset = document.querySelector("#btn__reset");
