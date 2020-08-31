@@ -94,7 +94,7 @@ class Game {
 		let title = document.querySelector("#overlay .title");
 
 		// I build in an if statement that dictates the text content and screen that is shown when you win or lose the game.
-		if (gameWon) {
+		if (gameWon === true) {
 			overlay.className = "win";
 			title.textContent = "You Are Victorious!";
 			startButton.textContent = "Play Again";
@@ -105,16 +105,23 @@ class Game {
 			startButton.textContent = "Start Over?";
 			overlay.style.display = "flex";
 		}
-		// This block of code resets the game upon winning or losing.
-		this.missed = 0;
-		this.activePhrase = null;
-		const phraseUl = document.querySelector("ul");
-		phraseUl.innerHTML = "";
-		const keyboard = document.querySelectorAll(".key");
-		keyboard.forEach((key) => {
-			key.className = "key";
-			key.removeAttribute("disabled");
+	}
+
+	/**
+	 * Decided to make the gameboard reset its own method within the Game Object.
+	 * The gameboard reset does exactly as decribed. It handles resetting all aspects of the game, for a new game. Including the removal of appended LIs, "chosen" buttons, "wrong" or "right" buttons and the onscreen phrase.
+	 */
+	gameboardReset() {
+		document.querySelector("#phrase ul").innerHTML = "";
+
+		// Iterates over the keyboard buttons and applies the following properties.
+		keyboardKeys.forEach((button) => {
+			button.disabled = false;
+			button.classList.add("key");
+			button.classList.remove("wrong");
+			button.classList.remove("chosen");
 		});
+		// Handles resetting the heart containers on screen, for a new game.
 		const heartContainers = document.querySelectorAll(".tries img");
 		heartContainers.forEach((heartHealth) => {
 			heartHealth.src = "images/liveHeart.png";
@@ -125,42 +132,20 @@ class Game {
 	 * Handles onscreen keyboard button clicks and mouse clicks.
 	 * @param (HTMLButtonElement) button - The clicked button element
 	 */
-	handleInteraction(event) {
-		// Variable containing the event targets className.
-		const keyClicks = event.target.className;
+	handleInteraction(button) {
+		button.disabled = true;
 		// These If Statements dictate what the game does as the user plays, whether it shows the gameWon Screen or gameOver screen, upon failing guesses or succesfully guessing the letters in the randomPhrase(). It also handles the removal of lifes upon failing guesses. Both work for either keystroke or mouseclick event listeners.
-		if (keyClicks === "key") {
-			const pressedKey = event.target;
-			pressedKey.setAttribute("disabled", true);
 
-			if (game.activePhrase.checkLetter(pressedKey.textContent) === false) {
-				pressedKey.className += " wrong";
-				return game.removeLife();
-			} else {
-				pressedKey.className += " chosen";
-				game.activePhrase.showMatchedLetter(pressedKey.textContent);
-				if (game.checkForWin() === true) {
-					return game.gameOver(true);
-				}
-			}
+		if (!this.activePhrase.checkLetter(button.textContent)) {
+			button.classList.add("wrong");
+			this.removeLife();
 		} else {
-			const letterBoard = document.querySelectorAll("#qwerty button");
-			const keyPress = event.key;
-			letterBoard.forEach((key) => {
-				if (key.innerHTML === keyPress) {
-					key.setAttribute("disabled", true);
-					if (game.activePhrase.checkLetter(keyPress) === false) {
-						key.className += " wrong";
-						return game.removeLife();
-					} else {
-						key.className += " chosen";
-						game.activePhrase.showMatchedLetter(keyPress);
-						if (game.checkForWin() === true) {
-							return game.gameOver(true);
-						}
-					}
-				}
-			});
+			button.classList.add("chosen");
+			this.activePhrase.showMatchedLetter(button.textContent);
+
+			if (this.checkForWin()) {
+				this.gameOver(true);
+			}
 		}
 	}
 }
