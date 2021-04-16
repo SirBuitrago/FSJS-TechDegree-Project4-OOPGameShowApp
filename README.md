@@ -1,5 +1,8 @@
 # TechDegree-Project4-OOPGameShowApp
 
+
+Project 4 of the Full Stack JavaScript Tech Degree.
+
 Game Show Application:
 
 Browser-based, word guessing game: "Phrase Hunter." I used JavaScript and OOP (Object-Oriented Programming) to create and select a random, hidden phrase, which a player tries to guess, by clicking letters on an onscreen keyboard.
